@@ -2,7 +2,7 @@ export default class ArcadeEntity extends Phaser.Physics.Arcade.Sprite {
 	constructor(data) {
 		let { name, scene, x, y, texture, frame } = data;
 
-		super(scene.arcade.word, x, y, texture, frame);
+		super(scene, x, y, texture, frame);
 
 		this.x += this.width / 2;
 		this.y += this.height / 2;
