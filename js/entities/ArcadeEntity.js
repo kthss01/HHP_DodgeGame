@@ -10,6 +10,8 @@ export default class ArcadeEntity extends Phaser.Physics.Arcade.Sprite {
 		this.name = name;
 		this._position = new Phaser.Math.Vector2(this.x, this.y);
 
+		this.setDepth(1);
+
 		this.scene.add.existing(this);
 		this.scene.physics.add.existing(this);
 	}

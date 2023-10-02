@@ -1,3 +1,4 @@
+import Bullets from "../entities/Bullets.js";
 import Player from "../entities/Player.js";
 
 export default class MainScene extends Phaser.Scene {
@@ -7,11 +8,14 @@ export default class MainScene extends Phaser.Scene {
 	}
 
 	preload = () => {
+		Bullets.preload(this);
 		Player.preload(this);
 	};
 
 	create = () => {
 		this.createPlayer();
+		this.createBullets();
+		this.createScore();
 	};
 
 	createPlayer = () => {
@@ -38,7 +42,56 @@ export default class MainScene extends Phaser.Scene {
 		});
 	};
 
+	createBullets = () => {
+		this.bullets = new Bullets(this);
+
+		this.bullets.danmakuFire();
+
+		// collide 처리
+		this.player.body.onOverlap = true;
+		this.physics.add.overlap(this.player, this.bullets);
+		this.physics.world.on(
+			"overlap",
+			(gameObject1, gameObject2, body1, body2) => {
+				gameObject1.setAlpha(0.5);
+				gameObject2.setAlpha(0.5);
+
+				this.showGameOver();
+			}
+		);
+	};
+
+	createScore = () => {
+		this.score = this.add.text(
+			0,
+			0,
+			`Left Bullet : ${this.bullets.getLength()}`,
+			{
+				fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+			}
+		);
+	};
+
 	update = (time, delta) => {
 		this.player.update(time, delta);
+
+		this.updateScore();
+	};
+
+	updateScore = () => {
+		this.score.setText(
+			`Left Bullet : ${this.bullets.getLeftBullets()}`
+			//\nUsed Bullet : ${this.bullets.getTotalUsed()} // 체크용
+		);
+
+		if (this.bullets.getTotalUsed() == 0) {
+			this.showGameOver();
+		}
+	};
+
+	showGameOver = () => {
+		// console.log("game over");
+		alert(`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`);
+		this.scene.pause();
 	};
 }
