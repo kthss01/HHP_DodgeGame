@@ -1,4 +1,5 @@
 import ArcadeEntity from "./ArcadeEntity.js";
+import Bullet from "./Bullets.js";
 
 export default class Player extends ArcadeEntity {
 	constructor(data) {
@@ -15,11 +16,11 @@ export default class Player extends ArcadeEntity {
 	};
 
 	update = (time, delta) => {
-		this.updateInput();
+		this.updateInput(time, delta);
 	};
 
 	// 캐릭터 입력 조작
-	updateInput = () => {
+	updateInput = (time, delta) => {
 		let playerVelocity = new Phaser.Math.Vector2();
 		if (this.inputKeys.left.isDown) {
 			playerVelocity.x = -1;
