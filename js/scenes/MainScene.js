@@ -21,8 +21,8 @@ export default class MainScene extends Phaser.Scene {
 	createPlayer = () => {
 		this.player = new Player({
 			scene: this,
-			x: 200,
-			y: 200,
+			x: 230,
+			y: 370,
 			texture: "boat",
 		});
 
@@ -91,7 +91,7 @@ export default class MainScene extends Phaser.Scene {
 
 	showGameOver = () => {
 		// console.log("game over");
-		alert(`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`);
-		this.scene.pause();
+		// alert(`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`);
+		// this.scene.pause();
 	};
 }
