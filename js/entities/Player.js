@@ -9,6 +9,9 @@ export default class Player extends ArcadeEntity {
 		this.setScale(0.25, 0.25);
 
 		this.speed = 200;
+
+		this.setSize(66, 50, true);
+		this.setCircle(36);
 	}
 
 	static preload = (scene) => {

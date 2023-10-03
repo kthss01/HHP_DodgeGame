@@ -22,7 +22,7 @@ export default class MainScene extends Phaser.Scene {
 		this.player = new Player({
 			scene: this,
 			x: 230,
-			y: 370,
+			y: 380,
 			texture: "boat",
 		});
 

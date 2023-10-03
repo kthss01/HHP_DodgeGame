@@ -6,7 +6,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
 		this.scene = scene;
 
-		this.setScale(0.5, 0.5);
+		this.setScale(0.25, 0.25);
 	}
 
 	fire(x, y, angle, speed = 300, frame = 1) {
