@@ -98,7 +98,8 @@ export default class MainScene extends Phaser.Scene {
 			alert(
 				`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`
 			);
-			this.scene.pause();
+			// this.scene.pause();
+			this.scene.start("MainScene");
 		} else {
 			this.scene.start("EndingScene");
 		}

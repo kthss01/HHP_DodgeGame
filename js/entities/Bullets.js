@@ -1,4 +1,4 @@
-const MAX_BULLET_COUNT = 64 * 5;
+const MAX_BULLET_COUNT = 64 * 50;
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, texture, frame) {
