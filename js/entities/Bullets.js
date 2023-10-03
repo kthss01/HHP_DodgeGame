@@ -1,17 +1,21 @@
-const MAX_BULLET_COUNT = 500;
+const MAX_BULLET_COUNT = 64 * 50;
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
-	constructor(scene, x, y) {
-		super(scene, x, y, "bullet");
+	constructor(scene, x, y, texture, frame) {
+		super(scene, x, y, texture, frame);
 
 		this.scene = scene;
+
+		this.setScale(0.25, 0.25);
 	}
 
-	fire(x, y, angle, speed = 300) {
+	fire(x, y, angle, speed = 300, frame = 1) {
 		this.body.reset(x, y);
 
 		this.setActive(true);
 		this.setVisible(true);
+
+		this.setFrame(frame);
 
 		this.scene.physics.velocityFromAngle(angle, speed, this.body.velocity);
 		// this.scene.physics.velocityFromRotation(angle, speed, this.body.velocity); // radian으로 회전
@@ -28,7 +32,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		// }
 
 		// 화면 밖을 벗어난 경우
-		if (this.y >= 500) {
+		if (
+			this.y <= -100 ||
+			this.y >= 600 ||
+			this.x <= -100 ||
+			this.x >= 700
+		) {
 			this.setActive(false);
 			this.setVisible(false);
 		}
@@ -42,6 +51,8 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 		this.createMultiple({
 			frameQuantity: MAX_BULLET_COUNT,
 			key: "bullet",
+			frame: 1,
+			// randomFrame: true,
 			active: false,
 			visible: false,
 			classType: Bullet,
@@ -51,28 +62,85 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 	}
 
 	static preload = (scene) => {
-		scene.load.image("bullet", "assets/sprites/bullet/bullet7.png");
+		// scene.load.image("bullet", "assets/sprites/bullet/bullet7.png");
+		scene.load.spritesheet("bullet", "assets/sprites/bullet/balls.png", {
+			frameWidth: 17,
+			frameHeight: 17,
+		});
 	};
 
-	fireBullet(x, y, angle) {
+	fireBullet(x, y, angle, speed, frame) {
 		const bullet = this.getFirstDead(false);
 
 		if (bullet) {
-			bullet.fire(x, y, angle);
+			bullet.fire(x, y, angle, speed, frame);
 			this.leftBullets -= 1;
+			this.shootCnt += 1;
 		}
 	}
 
 	danmakuFire = () => {
+		this.angle = -52.5;
+		this.angle2 = 52.5;
+		this.angleSpeed = 30;
+		this.angleSpeed2 = 30;
+		this.speed = 100;
+		this.delay = 100; // 발사 딜레이
+
+		this.oneShootCnt = 8; // 한번에 발사 수
+		this.shootCnt = 0;
+
 		// 시간에 따른 발사
 		this.scene.time.addEvent({
-			delay: 100,
-			startAt: 100,
-			repeat: this.getLength() - 1,
+			delay: this.delay,
+			startAt: 0,
+			repeat: this.getLength() / (this.oneShootCnt * 4) - 1,
 			callback: () => {
-				const x = this.getRandomInt(600);
+				const x = 300;
 
-				this.fireBullet(x, -25, 90);
+				for (let i = 0; i < this.oneShootCnt; i++) {
+					this.fireBullet(
+						x,
+						100,
+						this.angle + (i / this.oneShootCnt) * 360,
+						this.speed,
+						1
+					);
+				}
+
+				for (let i = 0; i < this.oneShootCnt; i++) {
+					this.fireBullet(
+						x - 100,
+						200,
+						this.angle + (i / this.oneShootCnt) * 360,
+						this.speed,
+						2
+					);
+				}
+
+				this.angle = this.angle + this.angleSpeed;
+
+				for (let i = 0; i < this.oneShootCnt; i++) {
+					this.fireBullet(
+						x,
+						300,
+						this.angle2 - (i / this.oneShootCnt) * 360,
+						this.speed,
+						3
+					);
+				}
+
+				for (let i = 0; i < this.oneShootCnt; i++) {
+					this.fireBullet(
+						x + 100,
+						200,
+						this.angle2 - (i / this.oneShootCnt) * 360,
+						this.speed,
+						4
+					);
+				}
+
+				this.angle2 = this.angle2 - this.angleSpeed2;
 			},
 		});
 	};

@@ -13,6 +13,7 @@ export default class ArcadeEntity extends Phaser.Physics.Arcade.Sprite {
 		this.setDepth(1);
 
 		this.scene.add.existing(this);
+		// game object render면 추가됨 preUpdate method 있으면 이것도 update list에 추가
 		this.scene.physics.add.existing(this);
 	}
 

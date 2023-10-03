@@ -21,8 +21,8 @@ export default class MainScene extends Phaser.Scene {
 	createPlayer = () => {
 		this.player = new Player({
 			scene: this,
-			x: 200,
-			y: 200,
+			x: 230,
+			y: 380,
 			texture: "boat",
 		});
 
@@ -81,10 +81,13 @@ export default class MainScene extends Phaser.Scene {
 	updateScore = () => {
 		this.score.setText(
 			`Left Bullet : ${this.bullets.getLeftBullets()}`
-			//\nUsed Bullet : ${this.bullets.getTotalUsed()} // 체크용
+			// \nUsed Bullet : ${this.bullets.getTotalUsed()}` // test
 		);
 
-		if (this.bullets.getTotalUsed() == 0) {
+		if (
+			this.bullets.getLeftBullets() == 0 &&
+			this.bullets.getTotalUsed() == 0
+		) {
 			this.showGameOver();
 		}
 	};
