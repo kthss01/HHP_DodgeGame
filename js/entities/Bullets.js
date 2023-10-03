@@ -1,4 +1,4 @@
-const MAX_BULLET_COUNT = 10000;
+const MAX_BULLET_COUNT = 64 * 50;
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, texture, frame) {
@@ -82,13 +82,12 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 		this.delay = 100; // 발사 딜레이
 
 		this.oneShootCnt = 8; // 한번에 발사 수
-		this.shootCnt = 0;
 
 		// 시간에 따른 발사
 		this.scene.time.addEvent({
 			delay: this.delay,
 			startAt: 0,
-			repeat: this.getLength() / this.oneShootCnt - 1,
+			repeat: this.getLength() / (this.oneShootCnt * 4) - 1,
 			callback: () => {
 				const x = 300;
 
@@ -100,8 +99,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 						this.speed,
 						1
 					);
-
-					this.shootCnt += 1;
 				}
 
 				for (let i = 0; i < this.oneShootCnt; i++) {
@@ -112,8 +109,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 						this.speed,
 						2
 					);
-
-					this.shootCnt += 1;
 				}
 
 				this.angle = this.angle + this.angleSpeed;
@@ -126,8 +121,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 						this.speed,
 						3
 					);
-
-					this.shootCnt += 1;
 				}
 
 				for (let i = 0; i < this.oneShootCnt; i++) {
@@ -138,8 +131,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 						this.speed,
 						4
 					);
-
-					this.shootCnt += 1;
 				}
 
 				this.angle2 = this.angle2 - this.angleSpeed2;
