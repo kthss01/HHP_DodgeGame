@@ -10,3 +10,7 @@ HangHaePlus Coding Athletics (코육대) Dodge game
 
 ## 배포
 https://kthss01.github.io/HHP_DodgeGame/
+
+## 게임 방법
+- 이동 방법 : 화살표키를 이용한 이동
+- 게임 승리 조건 : 발사된 총알 모두 피하기
