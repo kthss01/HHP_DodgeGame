@@ -88,13 +88,20 @@ export default class MainScene extends Phaser.Scene {
 			this.bullets.getLeftBullets() == 0 &&
 			this.bullets.getTotalUsed() == 0
 		) {
-			this.showGameOver();
+			this.showGameOver(true);
 		}
 	};
 
-	showGameOver = () => {
+	showGameOver = (isWin = false) => {
 		// console.log("game over");
-		alert(`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`);
-		this.scene.pause();
+		if (!isWin) {
+			alert(
+				`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`
+			);
+			// this.scene.pause();
+			this.scene.start("MainScene");
+		} else {
+			this.scene.start("EndingScene");
+		}
 	};
 }
