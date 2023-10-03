@@ -1,4 +1,5 @@
 import MainScene from "./scenes/MainScene.js";
+import EndingScene from "./scenes/EndingScene.js";
 
 const config = {
 	width: 600,
@@ -6,7 +7,7 @@ const config = {
 	backgroundColor: "rgba(0,0,75,0)",
 	type: Phaser.AUTO,
 	parent: "phaser-example",
-	scene: [MainScene],
+	scene: [MainScene, EndingScene],
 	physics: {
 		default: "arcade",
 		arcade: {
