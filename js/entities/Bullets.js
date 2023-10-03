@@ -32,7 +32,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 		// }
 
 		// 화면 밖을 벗어난 경우
-		if (this.y >= 500) {
+		if (
+			this.y <= -100 ||
+			this.y >= 600 ||
+			this.x <= -100 ||
+			this.x >= 700
+		) {
 			this.setActive(false);
 			this.setVisible(false);
 		}
@@ -70,6 +75,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 		if (bullet) {
 			bullet.fire(x, y, angle, speed, frame);
 			this.leftBullets -= 1;
+			this.shootCnt += 1;
 		}
 	}
 
@@ -82,6 +88,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
 		this.delay = 100; // 발사 딜레이
 
 		this.oneShootCnt = 8; // 한번에 발사 수
+		this.shootCnt = 0;
 
 		// 시간에 따른 발사
 		this.scene.time.addEvent({

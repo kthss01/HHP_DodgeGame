@@ -81,17 +81,20 @@ export default class MainScene extends Phaser.Scene {
 	updateScore = () => {
 		this.score.setText(
 			`Left Bullet : ${this.bullets.getLeftBullets()}`
-			//\nUsed Bullet : ${this.bullets.getTotalUsed()} // 체크용
+			// \nUsed Bullet : ${this.bullets.getTotalUsed()}` // test
 		);
 
-		if (this.bullets.getTotalUsed() == 0) {
+		if (
+			this.bullets.getLeftBullets() == 0 &&
+			this.bullets.getTotalUsed() == 0
+		) {
 			this.showGameOver();
 		}
 	};
 
 	showGameOver = () => {
 		// console.log("game over");
-		// alert(`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`);
-		// this.scene.pause();
+		alert(`Game Over!! Left Bullets : ${this.bullets.getLeftBullets()}`);
+		this.scene.pause();
 	};
 }
